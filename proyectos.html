@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style_media.css">
+</head>
+<body>
+
+<div class="sidebar widget-area-12">
+
+                    <div class="widget widget_vw_widget_social_counter">
+                        <div class="vw-social-counter vw-social-counter-twitter">
+                            <a class="vw-social-counter-icon" href="http://www.twitter.com/simasnicaragua" title="Follow our twitter" target="_blank">
+                                <i class="icon-social-twitter fa fa-twitter"></i>
+                            </a>
+                            <div class="vw-social-counter-counter">
+                                <div class="vw-social-counter-count tw"></div>
+                                <div class="vw-social-counter-unit">Seguidores</div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="vw-social-counter vw-social-counter-facebook">
+                            <a class="vw-social-counter-icon" href="https://www.facebook.com/envato" title="Like our facebook" target="_blank">
+                                <i class="icon-social-facebook fa fa-facebook"></i>
+                            </a>
+                            <div class="vw-social-counter-counter">
+                                <div class="vw-social-counter-count fb"></div>
+                                <div class="vw-social-counter-unit">Fans</div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="vw-social-counter vw-social-counter-youtube">
+                            <a class="vw-social-counter-icon" href="http://www.youtube.com/user/LOVEiSCHANNEL" title="Subscribe our youtube" target="_blank">
+                                <i class="icon-social-youtube fa fa-youtube"></i>
+                            </a>
+                            <div class="vw-social-counter-counter">
+                                <div class="vw-social-counter-count you"></div>
+                                <div class="vw-social-counter-unit">Suscriptores</div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="vw-social-counter vw-social-counter-googleplus">
+                            <a class="vw-social-counter-icon" href="https://plus.google.com/+envato" title="+1 our page" target="_blank">
+                                <i class="icon-social-gplus fa fa-google-plus"></i>
+                            </a>
+                            <div class="vw-social-counter-counter">
+                                <div class="vw-social-counter-count g"></div>
+                                <div class="vw-social-counter-unit">Personas</div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div> 
+
+                </div> 
+                
+<script src="jquery-1.11.2.min.js"></script>
+<script>
+$(document).ready(function(){
+    
+        $.getJSON("https://graph.facebook.com/simas.org.ni?callback=?", function(data) { 
+        //alert("fans: " + data.likes); 
+        $(".fb").text(data.likes);
+        });
+
+        $.getJSON("https://www.googleapis.com/plus/v1/people/114100385731830799998?fields=circledByCount&key=AIzaSyB-1HsCjiAEEAJlGeWP4l3knzZO4Dxa2Pk", function(data) {  
+        $(".g").text(data.circledByCount);
+        });
+
+ 
+
+var apikey='80dc21e292091997f40e74b69d58f727';
+     var twitterid='82125502';
+$.when(
+
+    $.ajax({
+        type: "GET",
+        dataType: "jsonp",
+        url: "http://api.twittercounter.com/?twitter_id="+twitterid+"&apikey="+apikey+"&output=JSONP&callback=getcount",
+        success: function (data) {
+            var twitterfollowcount = data.followers_current;
+            $(".twitter").html(twitterfollowcount);
+        }
+    }),$.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "http://graph.facebook.com/simas.org.ni",
+        success: function (data) {
+            var facebookfollowcount = data.likes;
+            $(".facebook").html(facebookfollowcount);
+        }
+    })  
+    ).done(function (twitter) {
+        var total =twitter[0].followers_current;
+        $(".tw").text(total);
+    });
+
+
+
+
+$.getJSON('https://gdata.youtube.com/feeds/api/users/simasNicaragua?alt=json',function(data){
+    //alert(data.entry.yt$statistics.subscriberCount);
+     $(".you").text(data.entry.yt$statistics.subscriberCount);
+});
+
+
+     });
+
+
+</script>
+
+
+</body>
+
+</html>
